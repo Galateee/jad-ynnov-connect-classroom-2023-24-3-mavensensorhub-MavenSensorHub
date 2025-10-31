@@ -19,35 +19,126 @@
     </modules>
 
     <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <!-- Centralisation des versions des dépendances -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- Verrouillage des versions des modules internes -->
+            <dependency>
+                <groupId>com.jad</groupId>
+                <artifactId>utils</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.jad</groupId>
+                <artifactId>sensor-data-collection</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.jad</groupId>
+                <artifactId>data-management</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.jad</groupId>
+                <artifactId>user-interface</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.jad</groupId>
+                <artifactId>report-generation</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>5.10.0</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.8.1</version>
+            <!-- Version figée dans dependencyManagement -->
             <scope>test</scope>
         </dependency>
     </dependencies>
 
     <build>
+        <!-- Gestion centralisée des versions de plugins (optionnel) -->
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.11.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>3.4.1</version>
+                </plugin>
+                <!-- Toolchains (recommandé). Nécessite %USERPROFILE%/.m2/toolchains.xml.  
+                     Exemple toolchains.xml:
+                     <toolchains>
+                       <toolchain>
+                         <type>jdk</type>
+                         <provides>
+                           <version>21</version>
+                         </provides>
+                         <configuration>
+                           <jdkHome>C:/Program Files/Java/jdk-21</jdkHome>
+                         </configuration>
+                       </toolchain>
+                     </toolchains>
+                -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-toolchains-plugin</artifactId>
+                    <version>3.0.0</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.10.1</version>
+                <version>3.11.0</version>
                 <configuration>
-                    <source>21</source>
-                    <target>21</target>
+                    <release>21</release>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.4.1</version>
+                <executions>
+                    <execution>
+                        <id>enforce-java-and-deps</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireJavaVersion>
+                                    <version>[21,)</version>
+                                </requireJavaVersion>
+                                <dependencyConvergence/>
+                            </rules>
+                            <fail>true</fail>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M5</version>
+                <version>3.2.5</version>
                 <configuration>
                     <includes>
                         <include>**/*Test.java</include>
@@ -56,6 +147,27 @@
                     <testFailureIgnore>false</testFailureIgnore>
                 </configuration>
             </plugin>
+            <!-- Plugin Toolchains (désactivé par défaut, à activer via profil si nécessaire)
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-toolchains-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>toolchain</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <toolchains>
+                        <jdk>
+                            <version>[21,)</version>
+                            <vendor>any</vendor>
+                        </jdk>
+                    </toolchains>
+                </configuration>
+            </plugin>
+            -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
@@ -76,6 +188,7 @@
                 <executions>
                     <execution>
                         <id>analyze</id>
+                        <phase>generate-test-resources</phase>
                         <goals>
                             <goal>tree</goal>
                         </goals>

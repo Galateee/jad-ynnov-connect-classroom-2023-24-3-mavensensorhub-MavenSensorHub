@@ -1,0 +1,58 @@
+@startuml packages
+title Diagramme de Packages - MavenSensorHub
+
+skinparam packageStyle rectangle
+skinparam backgroundColor white
+
+' Packages principaux par module
+package "com.jad.utils" as utils #E8F5E9 {
+}
+
+package "com.jad.sensordata" as sensordata #FFF9C4 {
+}
+
+package "com.jad.datamanagement" as datamanagement #E1F5FE {
+}
+
+package "com.jad.reportgeneration" as reportgeneration #F3E5F5 {
+}
+
+package "com.jad.userinterface" as userinterface #FFE0B2 {
+}
+
+package "com.jad.mastersensorhub" as main #FFCDD2 {
+}
+
+' Notes descriptives
+note right of utils : Module de base\nUtilitaires communs\nAucune dépendance
+note right of sensordata : Collecte de données\nCapteurs (Temperature, Humidity,\nPressure, WindSpeed)\nExpose: ISensor, SensorFactory
+note right of datamanagement : Gestion des données\nTraitement et stockage\nExpose: IDataManager,\nIDataProcessor, IDataStorage
+note right of reportgeneration : Génération de rapports\nFormats: CSV, Text\nExpose: IReportGenerator
+note right of userinterface : Interface utilisateur\nDashboard et affichage\nExpose: IApplication
+note right of main : Point d'entrée\nApplication principale\nMain class
+
+' Dépendances (scope: provided)
+sensordata ..> utils
+datamanagement ..> sensordata
+datamanagement ..> utils
+reportgeneration ..> sensordata
+reportgeneration ..> utils
+userinterface ..> datamanagement
+userinterface ..> sensordata
+
+' Dépendances principales (scope: compile)
+main --> utils
+main --> sensordata
+main --> datamanagement
+main --> reportgeneration
+main --> userinterface
+
+legend bottom
+Légende:
+..> : Dépendance provided (disponible runtime)
+--> : Dépendance compile (main-application)
+
+Architecture modulaire Maven multi-modules
+endlegend
+
+@enduml

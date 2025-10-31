@@ -11,16 +11,11 @@
 
     <artifactId>sensor-data-collection</artifactId>
 
-    <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <!-- Hérite de la configuration du parent -->
     <dependencies>
         <dependency>
             <groupId>com.jad</groupId>
             <artifactId>utils</artifactId>
-            <version>1.0-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
