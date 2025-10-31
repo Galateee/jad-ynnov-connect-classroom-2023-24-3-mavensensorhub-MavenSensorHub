@@ -151,6 +151,8 @@
                         <include>**/*Tests.java</include>
                     </includes>
                     <testFailureIgnore>false</testFailureIgnore>
+                    <!-- Ne pas échouer si aucun test n'est trouvé (modules sans tests) -->
+                    <failIfNoSpecifiedTests>false</failIfNoSpecifiedTests>
                 </configuration>
             </plugin>
             <!-- Plugin Toolchains (désactivé par défaut, à activer via profil si nécessaire)
