@@ -1,16 +1,16 @@
 package com.jad.userinterface;
 
-import com.jad.datamanagement.IDataManager;
-import com.jad.sensordata.SensorData;
-import com.jad.sensordata.SensorType;
+import com.jad.sensorapi.DataQueries;
+import com.jad.sensorapi.SensorData;
+import com.jad.sensorapi.SensorType;
 
 import java.text.MessageFormat;
 import java.util.List;
 
 class Dashboard {
-    private final IDataManager dataManager;
+    private final DataQueries dataManager;
 
-    public Dashboard(final IDataManager dataManager) {
+    public Dashboard(final DataQueries dataManager) {
         this.dataManager = dataManager;
     }
 

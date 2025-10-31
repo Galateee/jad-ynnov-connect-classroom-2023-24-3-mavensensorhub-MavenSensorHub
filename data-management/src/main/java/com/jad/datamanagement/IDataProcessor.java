@@ -1,13 +1,14 @@
 package com.jad.datamanagement;
 
-import com.jad.sensordata.SensorData;
-import com.jad.sensordata.SensorType;
+import com.jad.sensorapi.DataQueries;
+import com.jad.sensorapi.SensorData;
+import com.jad.sensorapi.SensorType;
 
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Optional;
 
-interface IDataProcessor {
+interface IDataProcessor extends DataQueries {
     Map<SensorType, Double> calculateAverage();
 
     Map<SensorType, Double> calculateMax();
@@ -15,14 +16,6 @@ interface IDataProcessor {
     Map<SensorType, Double> calculateMin();
 
     Map<SensorType, LocalDateTime> calculateLastCollectorTime();
-
-    Double calculateAverageBySensorType(SensorType sensorType);
-
-    Double calculateMaxBySensorType(SensorType sensorType);
-
-    Double calculateMinBySensorType(SensorType sensorType);
-
-    LocalDateTime calculateLastCollectorTimeBySensorType(SensorType sensorType);
 
     Optional<SensorData> calculateLastSensorDataBySensorType(SensorType sensorType);
 }

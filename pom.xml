@@ -9,6 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
+        <module>sensor-api</module>
         <module>main-application</module>
         <module>utils</module>
         <module>report-generation</module>
@@ -26,6 +27,11 @@
     <dependencyManagement>
         <dependencies>
             <!-- Verrouillage des versions des modules internes -->
+            <dependency>
+                <groupId>com.jad</groupId>
+                <artifactId>sensor-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.jad</groupId>
                 <artifactId>utils</artifactId>

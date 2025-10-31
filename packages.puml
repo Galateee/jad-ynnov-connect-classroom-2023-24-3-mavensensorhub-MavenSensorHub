@@ -1,11 +1,14 @@
 @startuml packages
-title Diagramme de Packages - MavenSensorHub
+title Diagramme de Packages - MavenSensorHub (Architecture DIP avec API)
 
 skinparam packageStyle rectangle
 skinparam backgroundColor white
 
 ' Packages principaux par module
 package "com.jad.utils" as utils #E8F5E9 {
+}
+
+package "com.jad.sensorapi" as sensorapi #B2DFDB {
 }
 
 package "com.jad.sensordata" as sensordata #FFF9C4 {
@@ -25,23 +28,27 @@ package "com.jad.mastersensorhub" as main #FFCDD2 {
 
 ' Notes descriptives
 note right of utils : Module de base\nUtilitaires communs\nAucune dépendance
-note right of sensordata : Collecte de données\nCapteurs (Temperature, Humidity,\nPressure, WindSpeed)\nExpose: ISensor, SensorFactory
-note right of datamanagement : Gestion des données\nTraitement et stockage\nExpose: IDataManager,\nIDataProcessor, IDataStorage
+note right of sensorapi : **API pure (contrats)**\nISensor, ISensorFactory\nSensorType, SensorData\nDataQueries\n**Aucune implémentation**
+note right of sensordata : Collecte de données\n**Implémente sensor-api**\nCapteurs concrets\n(Temperature, Humidity,\nPressure, WindSpeed)
+note right of datamanagement : Gestion des données\nTraitement et stockage\nExpose: IDataManager\nImplémente: DataQueries
 note right of reportgeneration : Génération de rapports\nFormats: CSV, Text\nExpose: IReportGenerator
-note right of userinterface : Interface utilisateur\nDashboard et affichage\nExpose: IApplication
-note right of main : Point d'entrée\nApplication principale\nMain class
+note right of userinterface : Interface utilisateur\nDashboard et affichage\nExpose: IApplication\nUtilise: DataQueries
+note right of main : Point d'entrée\nApplication principale\nAssemble tous les modules\nMain class
 
-' Dépendances (scope: provided)
+' Dépendances vers API (DIP)
+sensordata --> sensorapi : implements
+datamanagement --> sensorapi : uses
+reportgeneration --> sensorapi : uses
+userinterface --> sensorapi : uses
+
+' Dépendances utilitaires
 sensordata ..> utils
-datamanagement ..> sensordata
 datamanagement ..> utils
-reportgeneration ..> sensordata
 reportgeneration ..> utils
-userinterface ..> datamanagement
-userinterface ..> sensordata
 
-' Dépendances principales (scope: compile)
+' Dépendances principales (main-application)
 main --> utils
+main --> sensorapi
 main --> sensordata
 main --> datamanagement
 main --> reportgeneration
@@ -49,10 +56,13 @@ main --> userinterface
 
 legend bottom
 Légende:
+--> : Dépendance compile
 ..> : Dépendance provided (disponible runtime)
---> : Dépendance compile (main-application)
 
-Architecture modulaire Maven multi-modules
+**Architecture DIP (Dependency Inversion Principle)**
+Les modules dépendent d'abstractions (sensor-api)
+et non d'implémentations concrètes.
+Tous les tests architecturaux passent ✓
 endlegend
 
 @enduml

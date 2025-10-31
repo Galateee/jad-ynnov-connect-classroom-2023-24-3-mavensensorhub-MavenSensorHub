@@ -1,5 +1,9 @@
 package com.jad.sensordata;
 
+import com.jad.sensorapi.ISensor;
+import com.jad.sensorapi.ISensorFactory;
+import com.jad.sensorapi.SensorType;
+
 public class SensorFactory implements ISensorFactory {
     @Override
     public ISensor make(SensorType sensorType) {

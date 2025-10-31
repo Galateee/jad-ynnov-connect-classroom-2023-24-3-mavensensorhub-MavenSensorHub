@@ -15,6 +15,11 @@
     <dependencies>
         <dependency>
             <groupId>com.jad</groupId>
+            <artifactId>sensor-api</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.jad</groupId>
             <artifactId>utils</artifactId>
             <scope>provided</scope>
         </dependency>

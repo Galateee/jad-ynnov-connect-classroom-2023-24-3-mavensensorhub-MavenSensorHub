@@ -1,6 +1,6 @@
 package com.jad.userinterface;
 
-import com.jad.sensordata.SensorData;
+import com.jad.sensorapi.SensorData;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ public class UserInterface implements IUserInterface {
     private boolean running = true;
 
     public UserInterface(final IApplication application) {
-        this.dashboard = new Dashboard(application.getDataManager());
+        this.dashboard = new Dashboard(application.getDataQueries());
         this.application = application;
         this.userInteraction = new UserInteraction();
     }

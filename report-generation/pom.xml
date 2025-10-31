@@ -15,8 +15,8 @@
     <dependencies>
         <dependency>
             <groupId>com.jad</groupId>
-            <artifactId>sensor-data-collection</artifactId>
-            <scope>provided</scope>
+            <artifactId>sensor-api</artifactId>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.jad</groupId>

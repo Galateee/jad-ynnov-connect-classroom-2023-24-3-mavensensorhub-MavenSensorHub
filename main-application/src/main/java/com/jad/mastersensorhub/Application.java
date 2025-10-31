@@ -3,8 +3,9 @@ package com.jad.mastersensorhub;
 import com.jad.datamanagement.IDataManager;
 import com.jad.reportgeneration.IReportGenerator;
 import com.jad.reportgeneration.ReportType;
-import com.jad.sensordata.ISensorFactory;
-import com.jad.sensordata.SensorType;
+import com.jad.sensorapi.DataQueries;
+import com.jad.sensorapi.ISensorFactory;
+import com.jad.sensorapi.SensorType;
 import com.jad.userinterface.IApplication;
 import com.jad.userinterface.IUserInterface;
 import com.jad.userinterface.UserAction;
@@ -72,8 +73,12 @@ public class Application implements IApplication {
         }
     }
 
-    @Override
     public IDataManager getDataManager() {
+        return this.dataManager;
+    }
+
+    @Override
+    public DataQueries getDataQueries() {
         return this.dataManager;
     }
 
