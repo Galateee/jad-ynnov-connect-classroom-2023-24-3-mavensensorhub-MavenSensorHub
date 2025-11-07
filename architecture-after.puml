@@ -1,0 +1,55 @@
+@startuml architecture-after
+' Refactored Module Architecture (After Refactor)
+title Refactored Module Architecture (After Refactor)
+
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam defaultTextAlignment center
+
+package "shared-model" as SHM
+package "data-spi" as DSP
+package "report-spi" as RSP
+
+package "sensor-data-collection" as SDC
+package "data-management (impl)" as DM
+package "report-generation (impl)" as RG
+package "user-interface" as UI
+package "main-application" as APP
+package "utils" as UTL
+package "test" as TEST
+
+' Implementations depend on SPIs and shared model
+SDC --> SHM
+DM --> SHM
+DM --> DSP
+RG --> SHM
+RG --> RSP
+
+' UI depends only on contracts and model
+UI --> SHM
+UI --> DSP
+
+' Main app wires implementations and contracts
+APP --> SHM
+APP --> DSP
+APP --> RSP
+APP --> DM
+APP --> RG
+APP --> SDC
+APP --> UTL
+
+' Utilities used widely
+SHM --> UTL
+SDC --> UTL
+DM --> UTL
+RG --> UTL
+UI --> UTL
+
+' Tests target modules through app and layers
+TEST --> APP
+TEST --> UI
+TEST --> DM
+TEST --> RG
+TEST --> SDC
+
+@enduml
