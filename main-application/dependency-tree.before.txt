@@ -1,0 +1,14 @@
+com.jad:main-application:jar:1.0-SNAPSHOT
++- com.jad:utils:jar:1.0-SNAPSHOT:compile
++- com.jad:user-interface:jar:1.0-SNAPSHOT:compile
++- com.jad:data-management:jar:1.0-SNAPSHOT:compile
++- com.jad:sensor-data-collection:jar:1.0-SNAPSHOT:compile
++- com.jad:report-generation:jar:1.0-SNAPSHOT:compile
+\- org.junit.jupiter:junit-jupiter:jar:5.8.1:test
+   +- org.junit.jupiter:junit-jupiter-api:jar:5.8.1:test
+   |  +- org.opentest4j:opentest4j:jar:1.2.0:test
+   |  +- org.junit.platform:junit-platform-commons:jar:1.8.1:test
+   |  \- org.apiguardian:apiguardian-api:jar:1.1.2:test
+   +- org.junit.jupiter:junit-jupiter-params:jar:5.8.1:test
+   \- org.junit.jupiter:junit-jupiter-engine:jar:5.8.1:test
+      \- org.junit.platform:junit-platform-engine:jar:1.8.1:test
