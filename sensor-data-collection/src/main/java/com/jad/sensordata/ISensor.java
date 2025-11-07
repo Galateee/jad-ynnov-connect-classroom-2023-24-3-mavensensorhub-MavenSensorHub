@@ -1,7 +1,4 @@
 package com.jad.sensordata;
 
-public interface ISensor {
-    SensorType getSensorType();
-
-    SensorData getSensorData();
-}
+// Definitions for ISensor have been moved to module `shared-model` (com.jad.sensordata).
+// This file intentionally contains no type declarations to avoid duplicate FQCN across modules.

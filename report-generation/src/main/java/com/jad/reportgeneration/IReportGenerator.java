@@ -1,9 +1,4 @@
 package com.jad.reportgeneration;
 
-import com.jad.sensordata.SensorData;
-
-import java.util.List;
-
-public interface IReportGenerator {
-    void generate(ReportType reportType, List<SensorData> data);
-}
+// Interface moved to module `report-spi` (com.jad.reportgeneration.IReportGenerator)
+// This file kept as placeholder to avoid duplicate types in different modules.

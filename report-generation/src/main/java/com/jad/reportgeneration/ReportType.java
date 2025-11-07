@@ -1,16 +1,4 @@
 package com.jad.reportgeneration;
 
-public enum ReportType {
-    TEXT("Text"),
-    CSV("CSV");
-
-    private final String name;
-
-    ReportType(final String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-}
+// ReportType moved to module `report-spi` (com.jad.reportgeneration.ReportType)
+// This file intentionally contains no type declarations to avoid duplicate FQCN across modules.

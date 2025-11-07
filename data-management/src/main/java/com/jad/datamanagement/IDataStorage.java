@@ -1,12 +1,4 @@
 package com.jad.datamanagement;
 
-import com.jad.sensordata.SensorData;
-import com.jad.sensordata.SensorType;
-
-import java.util.List;
-
-public interface IDataStorage {
-    List<SensorData> getAllStoredData();
-
-    List<SensorData> getAllDataBySensorType(SensorType sensorType);
-}
+// Interface moved to module `data-spi` (com.jad.datamanagement.*)
+// This file intentionally contains no type declarations to avoid duplicate FQCN across modules.
