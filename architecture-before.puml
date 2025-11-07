@@ -1,0 +1,49 @@
+@startuml architecture-before
+' Original Module Coupling (Before Refactor)
+title Original Module Coupling (Before Refactor)
+
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam defaultTextAlignment center
+
+package "sensor-data-collection" as SDC
+package "data-management" as DM
+package "report-generation" as RG
+package "user-interface" as UI
+package "main-application" as APP
+package "utils" as UTL
+package "test" as TEST
+
+' UI had direct dependencies on implementation modules
+UI --> DM
+UI --> RG
+UI --> SDC
+
+' Reporting and data management accessed sensor data
+RG --> DM
+RG --> SDC
+DM --> SDC
+
+' Main application orchestrated everything directly
+APP --> UI
+APP --> DM
+APP --> RG
+APP --> SDC
+APP --> UTL
+
+' Utility module used broadly
+RG --> UTL
+DM --> UTL
+SDC --> UTL
+UI --> UTL
+APP --> UTL
+
+' Tests depended on all modules
+TEST --> APP
+TEST --> DM
+TEST --> RG
+TEST --> SDC
+TEST --> UI
+TEST --> UTL
+
+@enduml
